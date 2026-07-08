@@ -1,8 +1,12 @@
 import { ReactNode } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
+import { useStore } from "@/lib/store";
+import { t } from "@/lib/i18n";
 
 export function AppLayout({ children, title }: { children: ReactNode; title?: string }) {
+  const locale = useStore((state) => state.locale);
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-background">
@@ -12,7 +16,7 @@ export function AppLayout({ children, title }: { children: ReactNode; title?: st
             <SidebarTrigger className="text-muted-foreground hover:text-foreground" />
             <div className="h-5 w-px bg-border" />
             <h1 className="font-display text-lg font-semibold tracking-wide">
-              {title || "Painel"}
+              {title || t(locale, "app.dashboard")}
             </h1>
           </header>
           <main className="flex-1 p-4 md:p-6 animate-fade-in">{children}</main>

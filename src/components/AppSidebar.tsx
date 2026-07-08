@@ -1,41 +1,64 @@
 import { NavLink, useLocation } from "react-router-dom";
 import {
-  LayoutDashboard, Users, FileText, Boxes, Wrench, Calendar,
-  ListChecks, Image, PencilRuler, Scissors, Calculator, Wallet, Sparkles, Settings, Flame
+  LayoutDashboard,
+  Users,
+  FileText,
+  Boxes,
+  Wrench,
+  Calendar,
+  ListChecks,
+  Image,
+  PencilRuler,
+  Scissors,
+  Calculator,
+  Wallet,
+  Sparkles,
+  Settings,
+  Flame,
 } from "lucide-react";
 import {
-  Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
-  SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar, SidebarHeader,
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+  SidebarHeader,
 } from "@/components/ui/sidebar";
+import { useStore } from "@/lib/store";
+import { t, type Locale } from "@/lib/i18n";
 
-const grupos = [
+const buildGroups = (locale: Locale) => [
   {
-    label: "Operação",
+    label: t(locale, "sidebar.operation"),
     items: [
-      { title: "Painel", url: "/", icon: LayoutDashboard },
-      { title: "Clientes", url: "/clientes", icon: Users },
-      { title: "Orçamentos", url: "/orcamentos", icon: FileText },
-      { title: "Agenda", url: "/agenda", icon: Calendar },
-      { title: "Projetos", url: "/projetos", icon: ListChecks },
+      { title: t(locale, "sidebar.dashboard"), url: "/", icon: LayoutDashboard },
+      { title: t(locale, "sidebar.clients"), url: "/clientes", icon: Users },
+      { title: t(locale, "sidebar.budgets"), url: "/orcamentos", icon: FileText },
+      { title: t(locale, "sidebar.agenda"), url: "/agenda", icon: Calendar },
+      { title: t(locale, "sidebar.projects"), url: "/projetos", icon: ListChecks },
     ],
   },
   {
-    label: "Oficina",
+    label: t(locale, "sidebar.workshop"),
     items: [
-      { title: "Materiais", url: "/materiais", icon: Boxes },
-      { title: "Ferramentas", url: "/ferramentas", icon: Wrench },
-      { title: "Cortes", url: "/cortes", icon: Scissors },
-      { title: "Croqui CAD", url: "/cad", icon: PencilRuler },
-      { title: "Portfólio", url: "/portfolio", icon: Image },
+      { title: t(locale, "sidebar.materials"), url: "/materiais", icon: Boxes },
+      { title: t(locale, "sidebar.tools"), url: "/ferramentas", icon: Wrench },
+      { title: t(locale, "sidebar.cuts"), url: "/cortes", icon: Scissors },
+      { title: t(locale, "sidebar.cad"), url: "/cad", icon: PencilRuler },
+      { title: t(locale, "sidebar.portfolio"), url: "/portfolio", icon: Image },
     ],
   },
   {
-    label: "Gestão",
+    label: t(locale, "sidebar.management"),
     items: [
-      { title: "Financeiro", url: "/financeiro", icon: Wallet },
-      { title: "Simulador", url: "/simulador", icon: Calculator },
-      { title: "Mestre IA", url: "/ia", icon: Sparkles },
-      { title: "Configurações", url: "/configuracoes", icon: Settings },
+      { title: t(locale, "sidebar.finance"), url: "/financeiro", icon: Wallet },
+      { title: t(locale, "sidebar.simulator"), url: "/simulador", icon: Calculator },
+      { title: t(locale, "sidebar.ai"), url: "/ia", icon: Sparkles },
+      { title: t(locale, "sidebar.settings"), url: "/configuracoes", icon: Settings },
     ],
   },
 ];
@@ -44,6 +67,8 @@ export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
   const { pathname } = useLocation();
+  const locale = useStore((s) => s.locale);
+  const grupos = buildGroups(locale);
   const isActive = (path: string) => (path === "/" ? pathname === "/" : pathname.startsWith(path));
 
   return (

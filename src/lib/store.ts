@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import type { Locale } from "./i18n";
 
 export type Cliente = {
   id: string;
@@ -94,6 +95,7 @@ export type Lancamento = {
 };
 
 type State = {
+  locale: Locale;
   empresa: { nome: string; cnpj: string; telefone: string; endereco: string; logo?: string };
   clientes: Cliente[];
   orcamentos: Orcamento[];
@@ -106,6 +108,7 @@ type State = {
   proxNumOrc: number;
 
   setEmpresa: (e: State["empresa"]) => void;
+  setLocale: (locale: Locale) => void;
   addCliente: (c: Omit<Cliente, "id" | "criadoEm">) => Cliente;
   updateCliente: (id: string, c: Partial<Cliente>) => void;
   removeCliente: (id: string) => void;
@@ -144,6 +147,7 @@ const id = () => Math.random().toString(36).slice(2, 10);
 export const useStore = create<State>()(
   persist(
     (set, get) => ({
+      locale: "pt-BR",
       empresa: { nome: "Gerix", cnpj: "", telefone: "", endereco: "" },
       clientes: [],
       orcamentos: [],
@@ -155,6 +159,7 @@ export const useStore = create<State>()(
       lancamentos: [],
       proxNumOrc: 1,
 
+      setLocale: (locale) => set({ locale }),
       setEmpresa: (empresa) => set({ empresa }),
 
       addCliente: (c) => {
@@ -232,3 +237,6 @@ export function calcularOrcamento(o: Orcamento) {
 
 export const formatBRL = (v: number) =>
   v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+export const formatDate = (value: string | number | Date, locale: Locale = "pt-BR") =>
+  new Date(value).toLocaleDateString(locale === "en" ? "en-US" : "pt-BR");

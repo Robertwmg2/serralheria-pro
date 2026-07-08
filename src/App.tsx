@@ -1,8 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useStore } from "@/lib/store";
 import Dashboard from "./pages/Dashboard";
 import Clientes from "./pages/Clientes";
 import Orcamentos from "./pages/Orcamentos";
@@ -21,11 +23,22 @@ import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
 
+function LocaleSync() {
+  const locale = useStore((state) => state.locale);
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
+
+  return null;
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <LocaleSync />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Dashboard />} />

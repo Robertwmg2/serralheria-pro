@@ -1,21 +1,24 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
+import { useStore } from "@/lib/store";
+import { t } from "@/lib/i18n";
 
 const NotFound = () => {
   const location = useLocation();
+  const { locale } = useStore();
 
   useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
+    console.error(`${t(locale, "common.route404")} ${location.pathname}`);
+  }, [location.pathname, locale]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted">
       <div className="text-center">
         <h1 className="mb-4 text-4xl font-bold">404</h1>
-        <p className="mb-4 text-xl text-muted-foreground">Oops! Page not found</p>
-        <a href="/" className="text-primary underline hover:text-primary/90">
-          Return to Home
-        </a>
+        <p className="mb-4 text-xl text-muted-foreground">{t(locale, "common.notFoundTitle")}</p>
+        <Link to="/" className="text-primary underline hover:text-primary/90">
+          {t(locale, "common.notFoundLink")}
+        </Link>
       </div>
     </div>
   );
