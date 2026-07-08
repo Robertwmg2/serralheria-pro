@@ -7,17 +7,27 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { useStore, formatBRL } from "@/lib/store";
+import { useStore, formatBRL, type Material } from "@/lib/store";
 import { Plus, Trash2, Boxes, AlertTriangle } from "lucide-react";
 import { toast } from "sonner";
 import { differenceInDays } from "date-fns";
 
 const empty = { nome: "", tipo: "metal" as const, unidade: "kg", estoque: 0, precoUnit: 0, duracaoDias: 0, validade: "", fornecedor: "" };
+type MaterialForm = {
+  nome: string;
+  tipo: Material["tipo"];
+  unidade: string;
+  estoque: number;
+  precoUnit: number;
+  duracaoDias: number;
+  validade: string;
+  fornecedor: string;
+};
 
 const MateriaisPage = () => {
   const { materiais, addMaterial, removeMaterial } = useStore();
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState<any>(empty);
+  const [form, setForm] = useState<MaterialForm>(empty);
 
   function salvar() {
     if (!form.nome.trim()) { toast.error("Informe o nome"); return; }
@@ -40,7 +50,10 @@ const MateriaisPage = () => {
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <Label>Tipo</Label>
-                    <Select value={form.tipo} onValueChange={(v) => setForm({ ...form, tipo: v })}>
+                    <Select
+                      value={form.tipo}
+                      onValueChange={(v) => setForm({ ...form, tipo: v as Material["tipo"] })}
+                    >
                       <SelectTrigger><SelectValue /></SelectTrigger>
                       <SelectContent>
                         <SelectItem value="metal">Metal</SelectItem>

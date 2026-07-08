@@ -144,7 +144,7 @@ const id = () => Math.random().toString(36).slice(2, 10);
 export const useStore = create<State>()(
   persist(
     (set, get) => ({
-      empresa: { nome: "Serralheria Pro", cnpj: "", telefone: "", endereco: "" },
+      empresa: { nome: "Gerix", cnpj: "", telefone: "", endereco: "" },
       clientes: [],
       orcamentos: [],
       materiais: [],
@@ -214,7 +214,7 @@ export const useStore = create<State>()(
       addLancamento: (l) => set({ lancamentos: [{ ...l, id: id() }, ...get().lancamentos] }),
       removeLancamento: (id) => set({ lancamentos: get().lancamentos.filter((x) => x.id !== id) }),
     }),
-    { name: "serralheria-pro" }
+    { name: "gerix" }
   )
 );
 

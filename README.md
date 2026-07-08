@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# Gerix
 
 TODO: Document your project here

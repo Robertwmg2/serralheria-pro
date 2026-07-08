@@ -40,7 +40,10 @@ const FinanceiroPage = () => {
             <Input type="date" value={form.data} onChange={(e) => setForm({ ...form, data: e.target.value })} />
             <Input className="col-span-2" placeholder="Descrição" value={form.descricao} onChange={(e) => setForm({ ...form, descricao: e.target.value })} />
             <Input placeholder="Categoria" value={form.categoria} onChange={(e) => setForm({ ...form, categoria: e.target.value })} />
-            <Select value={form.tipo} onValueChange={(v: any) => setForm({ ...form, tipo: v })}>
+            <Select
+              value={form.tipo}
+              onValueChange={(v) => setForm({ ...form, tipo: v as "entrada" | "saida" })}
+            >
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent><SelectItem value="entrada">Entrada</SelectItem><SelectItem value="saida">Saída</SelectItem></SelectContent>
             </Select>

@@ -55,7 +55,10 @@ const ProjetosPage = () => {
                   <div><Label>Prazo</Label><Input type="date" value={form.prazo} onChange={(e) => setForm({ ...form, prazo: e.target.value })} /></div>
                   <div>
                     <Label>Status</Label>
-                    <Select value={form.status} onValueChange={(v: any) => setForm({ ...form, status: v })}>
+                    <Select
+                      value={form.status}
+                      onValueChange={(v) => setForm({ ...form, status: v as "planejamento" | "em-andamento" | "pausado" | "concluido" })}
+                    >
                       <SelectTrigger><SelectValue /></SelectTrigger>
                       <SelectContent>
                         <SelectItem value="planejamento">Planejamento</SelectItem>

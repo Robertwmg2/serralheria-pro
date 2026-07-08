@@ -143,7 +143,10 @@ const OrcamentosPage = () => {
                   <div><Label>Desconto (%)</Label><Input type="number" value={form.desconto} onChange={(e) => setForm({ ...form, desconto: +e.target.value })} /></div>
                   <div>
                     <Label>Status</Label>
-                    <Select value={form.status} onValueChange={(v: any) => setForm({ ...form, status: v })}>
+                      <Select
+                        value={form.status}
+                        onValueChange={(v) => setForm({ ...form, status: v as Orcamento["status"] })}
+                      >
                       <SelectTrigger><SelectValue /></SelectTrigger>
                       <SelectContent>
                         <SelectItem value="rascunho">Rascunho</SelectItem>

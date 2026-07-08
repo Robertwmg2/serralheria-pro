@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { useStore } from "@/lib/store";
+import { useStore, type Servico } from "@/lib/store";
 import { Plus, Trash2, Calendar, MapPin, Clock } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
@@ -87,7 +87,10 @@ const AgendaPage = () => {
                       {s.local && <span className="flex items-center gap-1"><MapPin className="h-3 w-3" />{s.local}</span>}
                     </div>
                   </div>
-                  <Select value={s.status} onValueChange={(v: any) => updateServico(s.id, { status: v })}>
+                  <Select
+                    value={s.status}
+                    onValueChange={(v) => updateServico(s.id, { status: v as Servico["status"] })}
+                  >
                     <SelectTrigger className="w-32"><SelectValue /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="agendado">Agendado</SelectItem>
